@@ -12,55 +12,51 @@
 <link rel="stylesheet" href="/../static/css/styles.css" />
 </head>
 <body>
-                <center>
-                <table id= "data" class = "tn btn-lg btn-primary btn-block" ><tr><td> Nothing here :( </td></tr>
-                 <br>
-                 <br>
-                 
-                <button id= "button" class = "btn btn-secondary btn-x2"> Request </button>
-                </center>
-<script>
-    $("button").click(function() {
-                      $.get("/data", function(finalJSON, state) {
-                            var obj= JSON.parse(finalJSON);
-                            for(i=0; i<obj.length; i++){
-                                finalHTML="<tr><td>" +JSON.stringify(obj[i]["name"]) + "</td></tr>";
-                                $("#data").append(finalHTML)
-                            }
-                            });
-                      });
-</script>
-<br>
-
-<h1>This is a heading apparently</h1>
-<br>
-<br>
 <section>
-    <div>
+    <center>
+        <table id="data" style= "border:2px solid rgba(158, 158, 158, 0.84)" class = "btn btn-primary btn-xl page-scroll"> <tr><td> Nothing's here :(</td></tr> </table>
+        <br>
+        <br>
+        <button id= "data2" class = "btn btn-secondary btn-x1" type= "button">Request</button>
+    </center>
+    <script>$("button").click(function() {
+                              $.get("/data", function(finalJSON, state) {
+                                    $("#data").html("\0")
+                                    var obj= JSON.parse(finalJSON);
+                                    for(i=0; i<obj.length; i++){
+                                    finalHTML="<tr><td>" +JSON.stringify(obj[i]["Profession"]) + "</td></tr>";
+                                    $("#data").append(finalHTML)
+                                    }
+                                    });
+                              });
+        </script>
+<h1>This is a heading apparently</h1>
+
+<div>
     <form id="upload-file" role="form" action="upload" method="post" enctype="multipart/form-data">
         <input type = "file" name = "file"/>
-        <input id= "yearback" type = "submit" class = "btn btn-default btn-xl page-scroll" value= "Upload CSV" />
+        <input id= "upload-file" type = "submit" class = "btn btn-default btn-xl page-scroll" value= "Upload CSV" />
     </form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    $(function(){
-      $('#upload-file').on('submit'), function(){
-      var form_data = new FormData($('#upload-file')[0]);
-      $.ajax({
-             type: 'POST',
-             url: '/upload',
-             data: form_data,
-             success:function(data){
-             console.log("BT");
-             }
-             });
-      });
-      });
+        $(function(){
+          $('#upload-file').on('submit'), function(){
+          var form_data = new FormData($('#upload-file')[0]);
+          $.ajax({
+                 type: 'POST',
+                 url: '/upload',
+                 data: form_data,
+                 success:function(data){
+                 console.log("BT");
+                 }
+                 });
+        });
+        });
         </script>
 
     <script src="/../static/js/bootstrap.min.js"></script>
     <script src="/../static/js/jquery.easing.min.js"></script>
     <script src="/../static/js/wow.js"></script>
-    <div>
+</div>
 </section>
 </body>
 </html>

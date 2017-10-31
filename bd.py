@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from flask import jsonify
 import json, ast
 import pandas as pandu
+import csv
 import os
 from werkzeug import secure_filename
 
@@ -15,15 +16,21 @@ client = MongoClient("localhost", 27017)
 
 def kindlyDB(haha): #Parse uploaded CSV using pandas and pymongo to db
     dbNOW= client['pene']#select current db name
-    collNOW= 'things' #current collection name
-    currentDB=dbNOW[collNOW]
-    finalJO= pandu.read_csv(haha)#parse csv'
+    #current collection name
+    db=dbNOW['things']
+    finalJO= csv.DictReader(haha)#parse csv
+    db.drop()
+#find a way to automate this:
+    header=["Sl no", "Profession"]
+    for each in finalJO:
+        row={}
+        for i in header:
+            row[i]=each[i]
     
-    finalJOson= json.loads(finalJO.to_json(orient= 'records'))
-    currentDB.delete_many({})
-    currentDB.insert(finalJOson)
-
-
+        db.things.insert(row)
+#-----------
+    #finalJO.to_json(orient= 'records'))
+    #db.insert(finalJOson)
 
 @app.route('/')
 @app.route('/index')
