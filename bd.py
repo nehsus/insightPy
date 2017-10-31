@@ -21,7 +21,7 @@ def kindlyDB(haha): #Parse uploaded CSV using pandas and pymongo to db
     finalJO= csv.DictReader(haha)#parse csv
     db.drop()
 #find a way to automate this:
-    header=["Sl no", "Profession"]
+    header=["Profession"]
     for each in finalJO:
         row={}
         for i in header:
