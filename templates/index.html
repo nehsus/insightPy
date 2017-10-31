@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script language="JavaScript" type="text/javascript" src="/../static/js/jquery.min.js"></script>
+
+<title>Nehsuspace</title>
+<meta name="auh" content="Nehsus" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/../static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/../static/css/animate.min.css" />
+<link rel="stylesheet" href="/../static/css/ionicons.min.css" />
+<link rel="stylesheet" href="/../static/css/styles.css" />
+</head>
+<body>
+                <center>
+                <table id= "data" class = "tn btn-lg btn-primary btn-block" ><tr><td> Nothing here :( </td></tr>
+                 <br>
+                 <br>
+                 
+                <button id= "button" class = "btn btn-secondary btn-x2"> Request </button>
+                </center>
+<script>
+    $("button").click(function() {
+                      $.get("/data", function(finalJSON, state) {
+                            var obj= JSON.parse(finalJSON);
+                            for(i=0; i<obj.length; i++){
+                                finalHTML="<tr><td>" +JSON.stringify(obj[i]["name"]) + "</td></tr>";
+                                $("#data").append(finalHTML)
+                            }
+                            });
+                      });
+</script>
+<br>
+
+<h1>This is a heading apparently</h1>
+<script src="/../static/js/bootstrap.min.js"></script>
+<script src="/../static/js/jquery.easing.min.js"></script>
+<script src="/../static/js/wow.js"></script>
+</body>
+</html>
