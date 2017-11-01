@@ -14,23 +14,6 @@ from werkzeug import secure_filename
 app = Flask(__name__)
 client = MongoClient("localhost", 27017)
 
-def kindlyDB(haha): #Parse uploaded CSV using pandas and pymongo to db
-    dbNOW= client['pene']#select current db name
-    #current collection name
-    db=dbNOW['things']
-    finalJO= csv.DictReader(haha)#parse csv
-    db.drop()
-#find a way to automate this:
-    header=["Profession"]
-    for each in finalJO:
-        row={}
-        for i in header:
-            row[i]=each[i]
-    
-        db.things.insert(row)
-#-----------
-    #finalJO.to_json(orient= 'records'))
-    #db.insert(finalJOson)
 
 @app.route('/')
 @app.route('/index')
@@ -43,11 +26,26 @@ def upload():
     if request.method == 'POST':
         file=request.files['file']
         if file:
-            response= 'OK'
+            print ("OK")
             filename= secure_filename(file.filename)
             file.save(filename)
-            return response
-            kindlyDB(filename)
+            
+            
+            dbNOW= client['pene']
+            #select current db name
+            #current collection name
+            colNOW= 'things'
+            db=dbNOW[colNOW]
+    #parse csv
+            db.drop()
+
+            JO=pandu.read_csv(filename)
+            dbdata=json.loads(JO.to_json(orient= 'records'))
+            dbdata2=ast.literal_eval(json.dumps(dbdata))
+            db.insert(dbdata2)
+            print("\ninserted")
+            return render_template("index.html")
+
         else:
             return redirect(url_for('index'))
 
@@ -63,6 +61,8 @@ def data():
     finalJSON = str(bast).replace("'", "\"")
     return finalJSON
 #rtype {"name": "BT"}
+ #Parse uploaded CSV using pandas and pymongo to db
+
 
 if __name__ == "__main__":
     print("\n Established at :27017 \n")
