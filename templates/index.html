@@ -14,21 +14,28 @@
 <body>
 <section>
     <center>
-        <table id="data" style= "border:2px solid rgba(158, 158, 158, 0.84)" class = "btn btn-primary btn-xl page-scroll"> <tr><td> Nothing's here :(</td></tr> </table>
+        <table id="data" style= "border:2px solid rgba(158, 158, 158, 0.84)" class = "table-condensed"> <tr><td> Nothing's here :(</td></tr> </table>
         <br>
         <br>
         <button id= "data2" class = "btn btn-secondary btn-x1" type= "button">Request</button>
     </center>
-    <script>$("button").click(function() {
-                              $.get("/data", function(finalJSON, state) {
-                                    $("#data").html("\0")
-                                    var obj= JSON.parse(finalJSON);
-                                    for(i=0; i<obj.length; i++){
-                                    finalHTML="<tr><td>" +JSON.stringify(obj[i]["Profession"]) + "</td></tr>";
-                                    $("#data").append(finalHTML)
-                                    }
-                                    });
-                              });
+    <script>
+        $("button").click(function() {
+                          $.get("/data", function(finalJSON, staus) {
+                                var obj = JSON.parse(finalJSON)
+                                var content = "";
+                                for(i=0;i <obj.length; i++) {
+                                        content +=
+                                            '<tr>+<td>' +obj[i]["Andhra Pradesh"]+
+                                            '</td><td>' +obj[i]["Profession"]+
+                                            '</td><td>' +obj[i]["Number of Suicidal Deaths - Upto 14 Years - Total"]+
+                                            '</td><td>' +obj[i]["Number of Suicidal Deaths - Upto 14 Years - Female"]+
+                                            '</td></tr>'
+                                        } //Enter header names above^
+                                content += "</table>"
+                                $("#data").append(content)
+                          });
+            });
         </script>
 <h1>This is a heading apparently</h1>
 
