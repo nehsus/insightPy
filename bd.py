@@ -5,11 +5,12 @@ from datetime import datetime
 from pymongo import MongoClient
 from flask import jsonify
 import json, ast
+import numpy as np
 import pandas as pandu
 import csv
 import os
 from werkzeug import secure_filename
-
+from sm import parseAndWrite, suisight
 
 app = Flask(__name__)
 client = MongoClient("localhost", 27017)
@@ -26,24 +27,18 @@ def upload():
     if request.method == 'POST':
         file=request.files['file']
         if file:
-            print ("OK")
+            print ("OK GReat")
             filename= secure_filename(file.filename)
             file.save(filename)
-            
             
             dbNOW= client['pene']
             #select current db name
             #current collection name
             colNOW= 'things'
             db=dbNOW[colNOW]
-    #parse csv
             db.drop()
-
-            JO=pandu.read_csv(filename)
-            dbdata=json.loads(JO.to_json(orient= 'records'))
-            dbdata2=ast.literal_eval(json.dumps(dbdata))
-            db.insert(dbdata2)
-            print("\ninserted")
+            parseAndWrite(db, filename)
+            
             return render_template("index.html")
 
         else:
